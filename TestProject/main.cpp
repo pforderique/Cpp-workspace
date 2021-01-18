@@ -11,6 +11,8 @@ int main()
 { 
     // prints hello world 
     cout<<"Hello World!!"<<" My name is Fab!"; 
-      
+    const float pi = 3.14;
+    int j = 'B';
+    cout << endl << pi << endl << j;
     return 0; 
 }   

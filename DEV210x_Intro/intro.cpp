@@ -5,6 +5,16 @@
     >>> All operators are basically the same as those from Java
     >>> Without the break statement, the code will "fall through" to the remaining cases until it encounters a break statement.
     >>> y=x++ will set y=to original value of x, AND THEN increment x. y=++x, will increment x, and then set y=to NEW value of x
+    >>> The stack is a location in memory where intrinsic data is stored as well as memory addresses (pointers)
+    >>> Like a cafeteria stack of plates, items are pushed on top of the stack and other items are pushed further down.  
+        To remove an item from the stack, it is popped off, used, and discarded.
+    >>> The heap, or free store, is a pool of memory that is used to store objects that dynamically allocated at run time by your application
+    STORAGES
+    >>> static - identifiers declared with static are allocated when the program starts and deallocated when the program execution ends.  
+        Declaring a variable as static in a function means that the variable will retain its value between calls to the function.
+    >>> extern - used to declare an object that is defined in another translation unit of within the enclosing scope but has an external linkage.
+    >>> thread_local - declares that the identifier is only accessible on the thread in which it is created.  This prevents sharing of the identifier 
+        across multiple threads in the same application. This is part of the C++11 standard.
 */
 
 //two ways to initialize variables
@@ -14,6 +24,12 @@ int yourVar{1};
 const double pi{3.14};
 //namespace
 using namespace std;
+
+//declare function from another file
+#include "utilities.cpp"
+int AddTwo(int g);
+//OR use a header file - this way you can continually import all function from a file
+// #include "utilities.h"
 
 int main()  //all must have a main method! int is return type
 {
@@ -109,7 +125,36 @@ int main()  //all must have a main method! int is return type
     ::swap(test1, test2); //:: by itself is used to declare that swap is from your own namespace and not std's
     cout << "Test1 equals " << test1 << " Test2 equals " << test2 << endl;
 
-    std::cout << "\n"+myString; //std:: indicates that cout is part of std namespace
+    //CLASSES
+    class Rectangle
+    {
+    public:
+        //contructors
+        Rectangle()
+            : _width{1}, _height{1}
+        {}
+        Rectangle(int init_width, int init_height)
+            : _width{init_width}, _height{init_height}
+        {}
+        //class method
+        int get_area(){
+            return this->_height * this->_width; //this keyword usually not really needed
+        }
+        int get_width(){return _width;}
+        int get_height(){return _height;}
+        void set_height(int i){_height = i;}
+    private:
+        int _width;
+        int _height;
+    };
+    Rectangle outer;    //DONT declare without initializing! Initialize your variable, outer{} will set int's to 0, strings to null, etc. 
+    outer.set_height(100);
+    cout << outer.get_height() << endl;
+    //we can also set obj to const, so then you can't use any functions in your object unless you also declare them const: int area() const
+
+
+    int y = ::AddTwo(6);
+    std::cout << "\n"+myString << ". My num is " << y; //std:: indicates that cout is part of std namespace
 
 
     return 0;    //COULD return 0 if executed correctly or non-zero if failed
