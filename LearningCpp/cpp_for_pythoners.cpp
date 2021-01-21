@@ -37,8 +37,10 @@
 using namespace std;
 
 int main(){
-    cout << "Hello World" << endl;
-    cout << "new line?";
+    float num;
+    cout << "Give me a number: ";
+    cin >> num;
+    cout << "Here is your number, doubled: " << num*2 << endl;
     return 0;
 }
 
