@@ -114,5 +114,123 @@
 
 //Ch 3: Control Structures
 /*
+    the switch variable can only be compared for equality with an integer 
+        or something called an enumerated constant
+
+    ----------------------- CODE -----------------------
+    #include <iostream>
+    using namespace std;
+
+    int main(){
+        float grade = 95;
+        
+        if(grade < 80){
+            cout << 'C' << endl;
+        } 
+        else if(grade < 90){
+            cout << 'B' << endl;
+        }
+        else cout << 'A' << endl;
+    }
+
+*/
+
+//Ch 4: Functions
+/*
+    attach an “&” to the end of the type name in the formal parameter list 
+        in order to let the compiler know that you intend to use pass by reference
+
+    arrays are automatically passed by reference w/o having to use & in parameter!
+    To prevent ourselves from accidentally modifying any of these arrays, 
+        we can add the modifier const in the function head (ex: func(const int[] list) {})
+
+    C++ supports Function overloading for either diff data types or # of parameters
+    ----------------------- CODE -----------------------
+    #include <iostream>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <time.h>
+    using namespace std;
+
+    double sqrt(double n){
+        // returns sqrt of n using Netwons method 
+        double root = n/2;    
+        int times = 20;
+
+        for(int i = 0; i < 20; i++){
+            root = 0.5 * (root + n/root);
+        }
+
+        return root;
+    }
+
+    void swap(int &var1, int &var2){
+        // swaps the values of actual parameters now 
+        int temp;
+        temp = var1;
+        var1 = var2;
+        var2 = temp;
+    }
+
+    void mutate(int list[]){
+        list[0] = -1; // mutates!
+    }
+
+    string getRandomChar(int seed){
+        // our list of chars
+        char alpha[80]= {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', ' '};
+        srand(seed);
+        string s(1, alpha[rand() % 27]);
+        return s;
+    }
+
+    string getRandomSentence(int seed, int length){
+        string sentence = "";
+        for(int i = 0; i < length + 1; i++){
+            if (i > 0) {
+                sentence += getRandomChar(seed*i);
+            }
+        }
+        return sentence;
+    }
+
+    int getSentenceScore(string sentence, string target){
+        int score = 0;
+        for(int i = 0; i < sentence.length(); i++){
+            if(sentence[i] == target[i]){ score+=1; }
+        }
+        return score;
+    }
+
+    int main(){
+        // int myNum = 47;
+        // int myNum2 = 8;
+        // cout << "square root of " << myNum << " is: " << sqrt(myNum) << endl; 
+        
+        // cout << "swapping the numbers " << myNum << " and " << myNum2;
+        // swap(myNum, myNum2);
+        // cout << " produces " << myNum << " and " << myNum2 << endl;
+
+        // the infinite monkey
+        int maxScore = 0;
+        const string TARGET = "pie";
+
+        for(int i = 1; i < 1000; i++){
+            string sentence = getRandomSentence(i*13, TARGET.length());
+            int score = getSentenceScore(sentence, TARGET);
+            string prefix = "";
+
+            if(score > maxScore){
+                maxScore = score;
+                prefix += "*";
+            }
+
+            cout << prefix << sentence << " SCORE: " << score << endl;
+        }
+    }
+*/
+
+//Ch 5: Collection Data Types
+/*
     
 */
