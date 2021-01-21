@@ -84,28 +84,35 @@
         nullptr points to nothing (can also use NULL or 0, but nullptr is better)
         null pointer is often used in conditions and/or in logical operations. (like pythons None)
 
-*/
-#include <iostream>
-#include <cmath>
-#include <string>
-using namespace std;
+    ----------------------- CODE -----------------------
+    #include <iostream>
+    #include <cmath>
+    #include <string>
+    using namespace std;
 
-int main(){
-    bool myBool = -1; // true!
-    string strvar = "b"; // double quotes for strings
-    char charvar = 'b'; //single for chars
-    bool *ptrx; // a pointer!
-    ptrx = &myBool; // get myBool's address! (if you forget &, ptrx will store whatevs at location 1)
+    int main(){
+        bool myBool = -1; // true!
+        string strvar = "b"; // double quotes for strings
+        char charvar = 'b'; //single for chars
+        bool *ptrx; // a pointer!
+        ptrx = &myBool; // get myBool's address! (if you forget &, ptrx will store whatevs at location 1)
 
-    cout << pow(5, 3) << endl; // thx cmath library!
-    cout << "my bool: " << myBool << endl;  
-    cout << "bool's address: " << &myBool << endl; //lets see that memory address!
-    cout << "copy of address at ptrx: " << ptrx << endl;
-    cout << "dereferencing pointer by *ptrx: " << *ptrx << endl;
+        cout << pow(5, 3) << endl; // thx cmath library!
+        cout << "my bool: " << myBool << endl;  
+        cout << "bool's address: " << &myBool << endl; //lets see that memory address!
+        cout << "copy of address at ptrx: " << ptrx << endl;
+        cout << "dereferencing pointer by *ptrx: " << *ptrx << endl;
 
-    while(ptrx){
-        cout << "pointer is not none!" << endl;
-        ptrx = nullptr;
+        while(ptrx){
+            cout << "pointer is not none!" << endl;
+            ptrx = nullptr;
+        }
+        return 0;
     }
-    return 0;
-}
+
+*/
+
+//Ch 3: Control Structures
+/*
+    
+*/
