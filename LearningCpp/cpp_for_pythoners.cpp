@@ -232,5 +232,145 @@
 
 //Ch 5: Collection Data Types
 /*
-    
+    Collections sotre multiple values (or 0 or 1)
+    ex: Arrays, vectors, strings, sets, and hash tables
+
+    Arrays - ordered collection of identical data types. Can be...
+        statically allocated in which the array size is fixed at compile-time and cannot change
+            ex: double darray[40]; or int arr[] = {1, 2, 3, 4}
+        dynamically allocated uses pointers are used in allocation process so size can change at run-time
+            USUALLY, statically is used when speed is essential, and vectors are used if need flexibility
+        elements are stored in memory in contiguous memory locations making look-up via index VERY fast
+            comes w/ cost of minimal to no error checking
+                Means you can accidentially rewrite values in another array while looping past an array!
+        To get size, use sizeOf(arr)/sizeOf(arr[0]) since sizeOf() returns byte size
+            Because all elements in C++ arrays are the same type, they take the same amount of space 
+        In summary, only use fixed arrays for speed
+
+    Vectors - dynamically allocated array
+        Unlike Python lists, vectors are homogeneous
+        However, vector seems like an obj, so it is not automatically passed by reference
+        available through a library called the Standard Template Library (STL) (#include <vector>)
+        use .length() to get size
+
+    Strings - act like python strings...
+        but apparently you can append characters to them without creating a new string :O
+
+    Hash Tables - pythons dicts
+        unordered_map must be included from library <unordered_map>
+        In C++, the keyword first is used for the key, and second is used for the associated value.
+        .size() to get the length
+        hash tables are organized by the location given by the hash function 
+            rather than being in any particular order with respect to the keys 
+            this makes look-up extremely fast
+        Iterators of an unordered_map are implemented using pointers
+
+    Unordered Set - unordered_set
+        gotta import as (#include <unordered_set>)
+        Unordered_sets allow for fast retrieval of individual elements based on their value
+        the value of an element is at the same time its key, that identifies it uniquely
+        Keys are immutable, therefore, the elements in an set cannot be modified once in the container
+        However, they can be inserted and removed.
+
+    Glossary
+        const (immutable) - unable to be modified.
+        non-const (mutable) - the ability of an object to be modified.
+        word - unit of data used by a particular processor design.
+
 */
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+using namespace std;
+
+void countPastArray(int arr[]){
+    for (int i=0; i<=8; i++){ // C++ WILL iterate past your array!
+        cout << arr[i] << endl;
+        cout << "id: " << &arr[i] << endl;
+    }
+}
+
+void vectorExample(vector<int> &myvect){ // vector does not pass as ref automatically like array...
+    cout << &myvect << endl;
+    myvect.reserve(50); // reserve 50 spots (optional, but good idea bc it saves some time)
+    for(int i=0; i<50; i++){
+        myvect.push_back(i*i);
+        cout << myvect[i] << endl;
+        cout << "capacity: " << myvect.capacity() << endl;
+    }
+    // vector capacity upgrades to 100, but now vector had to be copied into a larger memory location :(
+    myvect.push_back(4);
+    cout << "capacity: " << myvect.capacity() << endl; 
+}
+
+void stringExample(){
+    string mystring1 = "Hello";
+    string mystring2 = "World!";
+    string mystring3;
+
+    mystring3 = mystring1 + " " + mystring2;
+    cout << mystring3 << endl;
+
+    cout << mystring2 << " begins at ";
+    cout << mystring3.find(mystring2) << endl;
+}
+
+void hashTableExample(unordered_map<string, string> &sp_to_en){
+    sp_to_en = { {"one", "uno"}, {"two", "dos"} }; // can initialize this way
+    sp_to_en["three"] = "tres";
+    sp_to_en["four"] = "cuatro"; // can also new ones like python
+
+    cout << sp_to_en.size() << endl;
+    cout << "one is " << sp_to_en["one"] << endl;
+
+    // Iterators of an unordered_map are implemented using pointers to point to 
+    // elements of the value type****************************************************
+    for (auto i = sp_to_en.begin(); i != sp_to_en.end(); i++ ){
+        //auto is used to automatically detect the data type when
+        //a variable is declared. Use this ONLY when declaring complex
+        //variables.
+
+        cout << i->first << ":";
+        cout << i->second << endl;
+    }
+
+}
+
+void setChecker(unordered_set<char> set, char letter){
+    if(set.find(letter) == set.end()){
+        cout << "letter " << letter << " is not in the set." << endl;
+    }
+    else{
+        cout << "letter " << letter << " is in the set." << endl;
+    }
+}
+
+int main(){
+    int myarray[] = {2,4,6,8};
+    int arrsize = sizeof(myarray)/sizeof(myarray[0]); // outputs 4
+    // countPastArray(myarray);
+
+    vector<int> intvector;
+    cout << &intvector << endl;
+    // vectorExample(intvector);
+    
+    char cppchar = 'a';   // char values use single quotes
+    char cstring[] = {"Hello World!"}; // C-string or char array uses double quotes (not recc)
+    string cppstring = "Hello World!"; // C++ strings use double quotes - much like python strings
+    cout << "address before adding char: " << &cppstring << endl;
+    cppstring.push_back('!'); // can also use .append(string) 
+    cout << "address after adding char: " << &cppstring << endl;
+    // stringExample();
+
+    unordered_map<string, string> spnumbers; //unordered_map is python dict
+    // hashTableExample(spnumbers);
+
+    unordered_set<char> charSet = {'d', 'c', 'b', 'a'};
+    char letter = 'e';
+    setChecker(charSet, letter);
+    charSet.insert('e');
+    setChecker(charSet, letter);
+
+    return 0;
+}
