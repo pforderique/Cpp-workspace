@@ -277,100 +277,102 @@
         non-const (mutable) - the ability of an object to be modified.
         word - unit of data used by a particular processor design.
 
+    ----------------------- CODE -----------------------
+
+    #include <iostream>
+    #include <vector>
+    #include <unordered_map>
+    #include <unordered_set>
+    using namespace std;
+
+    void countPastArray(int arr[]){
+        for (int i=0; i<=8; i++){ // C++ WILL iterate past your array!
+            cout << arr[i] << endl;
+            cout << "id: " << &arr[i] << endl;
+        }
+    }
+
+    void vectorExample(vector<int> &myvect){ // vector does not pass as ref automatically like array...
+        cout << &myvect << endl;
+        myvect.reserve(50); // reserve 50 spots (optional, but good idea bc it saves some time)
+        for(int i=0; i<50; i++){
+            myvect.push_back(i*i);
+            cout << myvect[i] << endl;
+            cout << "capacity: " << myvect.capacity() << endl;
+        }
+        // vector capacity upgrades to 100, but now vector had to be copied into a larger memory location :(
+        myvect.push_back(4);
+        cout << "capacity: " << myvect.capacity() << endl; 
+    }
+
+    void stringExample(){
+        string mystring1 = "Hello";
+        string mystring2 = "World!";
+        string mystring3;
+
+        mystring3 = mystring1 + " " + mystring2;
+        cout << mystring3 << endl;
+
+        cout << mystring2 << " begins at ";
+        cout << mystring3.find(mystring2) << endl;
+    }
+
+    void hashTableExample(unordered_map<string, string> &sp_to_en){
+        sp_to_en = { {"one", "uno"}, {"two", "dos"} }; // can initialize this way
+        sp_to_en["three"] = "tres";
+        sp_to_en["four"] = "cuatro"; // can also new ones like python
+
+        cout << sp_to_en.size() << endl;
+        cout << "one is " << sp_to_en["one"] << endl;
+
+        // Iterators of an unordered_map are implemented using pointers to point to 
+        // elements of the value type****************************************************
+        for (auto i = sp_to_en.begin(); i != sp_to_en.end(); i++ ){
+            //auto is used to automatically detect the data type when
+            //a variable is declared. Use this ONLY when declaring complex
+            //variables.
+
+            cout << i->first << ":";
+            cout << i->second << endl;
+        }
+
+    }
+
+    void setChecker(unordered_set<char> set, char letter){
+        if(set.find(letter) == set.end()){
+            cout << "letter " << letter << " is not in the set." << endl;
+        }
+        else{
+            cout << "letter " << letter << " is in the set." << endl;
+        }
+    }
+
+    int main(){
+        int myarray[] = {2,4,6,8};
+        int arrsize = sizeof(myarray)/sizeof(myarray[0]); // outputs 4
+        // countPastArray(myarray);
+
+        vector<int> intvector;
+        cout << &intvector << endl;
+        // vectorExample(intvector);
+        
+        char cppchar = 'a';   // char values use single quotes
+        char cstring[] = {"Hello World!"}; // C-string or char array uses double quotes (not recc)
+        string cppstring = "Hello World!"; // C++ strings use double quotes - much like python strings
+        cout << "address before adding char: " << &cppstring << endl;
+        cppstring.push_back('!'); // can also use .append(string) 
+        cout << "address after adding char: " << &cppstring << endl;
+        // stringExample();
+
+        unordered_map<string, string> spnumbers; //unordered_map is python dict
+        // hashTableExample(spnumbers);
+
+        unordered_set<char> charSet = {'d', 'c', 'b', 'a'};
+        char letter = 'e';
+        setChecker(charSet, letter);
+        charSet.insert('e');
+        setChecker(charSet, letter);
+
+        return 0;
+    }
 */
-#include <iostream>
-#include <vector>
-#include <unordered_map>
-#include <unordered_set>
-using namespace std;
-
-void countPastArray(int arr[]){
-    for (int i=0; i<=8; i++){ // C++ WILL iterate past your array!
-        cout << arr[i] << endl;
-        cout << "id: " << &arr[i] << endl;
-    }
-}
-
-void vectorExample(vector<int> &myvect){ // vector does not pass as ref automatically like array...
-    cout << &myvect << endl;
-    myvect.reserve(50); // reserve 50 spots (optional, but good idea bc it saves some time)
-    for(int i=0; i<50; i++){
-        myvect.push_back(i*i);
-        cout << myvect[i] << endl;
-        cout << "capacity: " << myvect.capacity() << endl;
-    }
-    // vector capacity upgrades to 100, but now vector had to be copied into a larger memory location :(
-    myvect.push_back(4);
-    cout << "capacity: " << myvect.capacity() << endl; 
-}
-
-void stringExample(){
-    string mystring1 = "Hello";
-    string mystring2 = "World!";
-    string mystring3;
-
-    mystring3 = mystring1 + " " + mystring2;
-    cout << mystring3 << endl;
-
-    cout << mystring2 << " begins at ";
-    cout << mystring3.find(mystring2) << endl;
-}
-
-void hashTableExample(unordered_map<string, string> &sp_to_en){
-    sp_to_en = { {"one", "uno"}, {"two", "dos"} }; // can initialize this way
-    sp_to_en["three"] = "tres";
-    sp_to_en["four"] = "cuatro"; // can also new ones like python
-
-    cout << sp_to_en.size() << endl;
-    cout << "one is " << sp_to_en["one"] << endl;
-
-    // Iterators of an unordered_map are implemented using pointers to point to 
-    // elements of the value type****************************************************
-    for (auto i = sp_to_en.begin(); i != sp_to_en.end(); i++ ){
-        //auto is used to automatically detect the data type when
-        //a variable is declared. Use this ONLY when declaring complex
-        //variables.
-
-        cout << i->first << ":";
-        cout << i->second << endl;
-    }
-
-}
-
-void setChecker(unordered_set<char> set, char letter){
-    if(set.find(letter) == set.end()){
-        cout << "letter " << letter << " is not in the set." << endl;
-    }
-    else{
-        cout << "letter " << letter << " is in the set." << endl;
-    }
-}
-
-int main(){
-    int myarray[] = {2,4,6,8};
-    int arrsize = sizeof(myarray)/sizeof(myarray[0]); // outputs 4
-    // countPastArray(myarray);
-
-    vector<int> intvector;
-    cout << &intvector << endl;
-    // vectorExample(intvector);
-    
-    char cppchar = 'a';   // char values use single quotes
-    char cstring[] = {"Hello World!"}; // C-string or char array uses double quotes (not recc)
-    string cppstring = "Hello World!"; // C++ strings use double quotes - much like python strings
-    cout << "address before adding char: " << &cppstring << endl;
-    cppstring.push_back('!'); // can also use .append(string) 
-    cout << "address after adding char: " << &cppstring << endl;
-    // stringExample();
-
-    unordered_map<string, string> spnumbers; //unordered_map is python dict
-    // hashTableExample(spnumbers);
-
-    unordered_set<char> charSet = {'d', 'c', 'b', 'a'};
-    char letter = 'e';
-    setChecker(charSet, letter);
-    charSet.insert('e');
-    setChecker(charSet, letter);
-
-    return 0;
-}
